@@ -72,5 +72,6 @@ const pintarCarrito = () => {
     carrito.appendChild(fragment)
 }
 
+
 // detectamos los botones y recorre los botones
 botones.forEach((btn) => btn.addEventListener("click", agregarAlCarrito))
