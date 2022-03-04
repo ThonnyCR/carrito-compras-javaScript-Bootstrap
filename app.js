@@ -12,10 +12,7 @@ const botones = document.querySelectorAll(".card .btn")
 // console.log(btn)
 
 // objeto
-const carritoObjeto = {
-
-}
-
+const carritoObjeto = []
 // con la "e.target" nos traemos la informacion del boton que se digito
 const agregarAlCarrito = (e) => {
     console.log(e.target.dataset.fruta)
@@ -27,17 +24,21 @@ const agregarAlCarrito = (e) => {
         cantidad: 1
     }
 
-    // parte donde aumenta la cantidad
-    if (carritoObjeto.hasOwnProperty(producto.titulo)) {
-        producto.cantidad = carritoObjeto[producto.titulo].cantidad + 1
+    const indice = carritoObjeto.findIndex(
+        (item) => item.id === producto.id
+    )
+
+    console.log(indice)
+
+    if (indice === -1) {
+        carritoObjeto.push(producto)
+    } else {
+        carritoObjeto[indice].cantidad++
     }
 
-    carritoObjeto[producto.titulo] = producto
+    console.log(carritoObjeto)
+    pintarCarrito(carritoObjeto)
 
-    pintarCarrito(producto)
-
-    // verificamos que todo este bien
-    // console.log(carritoObjeto)
 }
 
 {
@@ -57,11 +58,11 @@ const agregarAlCarrito = (e) => {
 }
 
 // agregarle producto en la linea 55 no es tan necesario ya que al final se esta usando carritoObjeto en la linea 56, es opcional
-const pintarCarrito = () => {
+const pintarCarrito = (array) => {
 
     carrito.textContent = ""
 
-    Object.values(carritoObjeto).forEach(item => {
+    array.forEach((item) => {
         const clone = template.content.firstElementChild.cloneNode(true)
         clone.querySelector(".lead").textContent = item.titulo
         clone.querySelector(".badge").textContent = item.cantidad
